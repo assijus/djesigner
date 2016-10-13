@@ -1,0 +1,1 @@
+update caderno set status ='A', envelope_assinatura = ?, data_assinatura = ?  where caderno_id = ?
