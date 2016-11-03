@@ -16,11 +16,14 @@ public class DocIdPdfGet implements IDocIdPdfGet {
 			throws Exception {
 		Id id = new Id(req.id);
 
-		byte[] pdf = retrievePdf(id);
-		resp.doc = pdf;
+		PdfData pdfd = retrievePdf(id);
+		resp.doc = pdfd.pdf;
+		resp.secret = pdfd.secret;
 	}
 
-	protected static byte[] retrievePdf(Id id) throws Exception, SQLException {
+	protected static PdfData retrievePdf(Id id) throws Exception, SQLException {
+		PdfData pdfd = new PdfData();
+		
 		// Chama a procedure que recupera os dados do PDF para viabilizar a
 		// assinatura
 		//
@@ -36,8 +39,9 @@ public class DocIdPdfGet implements IDocIdPdfGet {
 			while (rset.next()) {
 				String conteudo = rset.getString("conteudo");
 
-				byte[] pdf = Utils.hexToBytes(conteudo);
-				return pdf;
+				pdfd.pdf = Utils.hexToBytes(conteudo);
+				pdfd.secret = rset.getString("secret");
+				return pdfd;
 			}
 		} finally {
 			if (rset != null)

@@ -41,6 +41,7 @@ public class DocListGet implements IDocListGet {
 
 					Id id = new Id(rset.getLong("id"));
 					doc.id = id.toString();
+					doc.secret = rset.getString("secret");
 					doc.code = rset.getString("code");
 					doc.descr = rset.getString("descr");
 					doc.kind = rset.getString("kind");
