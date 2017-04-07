@@ -37,9 +37,7 @@ public class DocIdPdfGet implements IDocIdPdfGet {
 			rset = pstmt.executeQuery();
 
 			while (rset.next()) {
-				String conteudo = rset.getString("conteudo");
-
-				pdfd.pdf = Utils.hexToBytes(conteudo);
+				pdfd.pdf = rset.getBytes("conteudo");
 				pdfd.secret = rset.getString("secret");
 				return pdfd;
 			}
