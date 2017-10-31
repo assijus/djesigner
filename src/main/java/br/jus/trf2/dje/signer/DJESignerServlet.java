@@ -22,7 +22,7 @@ public class DJESignerServlet extends SwaggerServlet {
 
 		super.setAuthorization(SwaggerUtils.getProperty("djesigner.password", null));
 
-		addDependency(new TestableDependency("database", "djeds", false) {
+		addDependency(new TestableDependency("database", "djeds", false, 0, 10000) {
 			@Override
 			public String getUrl() {
 				return "java:/jboss/datasources/DjeDs";
