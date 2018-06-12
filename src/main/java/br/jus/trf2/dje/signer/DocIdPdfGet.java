@@ -3,7 +3,8 @@ package br.jus.trf2.dje.signer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import com.crivano.swaggerservlet.SwaggerServlet;
 
 import br.jus.trf2.assijus.system.api.IAssijusSystem.DocIdPdfGetRequest;
 import br.jus.trf2.assijus.system.api.IAssijusSystem.DocIdPdfGetResponse;
@@ -12,18 +13,9 @@ import br.jus.trf2.assijus.system.api.IAssijusSystem.IDocIdPdfGet;
 public class DocIdPdfGet implements IDocIdPdfGet {
 
 	@Override
-	public void run(DocIdPdfGetRequest req, DocIdPdfGetResponse resp)
-			throws Exception {
+	public void run(DocIdPdfGetRequest req, DocIdPdfGetResponse resp) throws Exception {
 		Id id = new Id(req.id);
 
-		PdfData pdfd = retrievePdf(id);
-		resp.doc = pdfd.pdf;
-		resp.secret = pdfd.secret;
-	}
-
-	protected static PdfData retrievePdf(Id id) throws Exception, SQLException {
-		PdfData pdfd = new PdfData();
-		
 		// Chama a procedure que recupera os dados do PDF para viabilizar a
 		// assinatura
 		//
@@ -37,9 +29,10 @@ public class DocIdPdfGet implements IDocIdPdfGet {
 			rset = pstmt.executeQuery();
 
 			while (rset.next()) {
-				pdfd.pdf = rset.getBytes("conteudo");
-				pdfd.secret = rset.getString("secret");
-				return pdfd;
+				SwaggerServlet.getHttpServletResponse().addHeader("Doc-Secret", rset.getString("secret"));
+				resp.inputstream = rset.getBinaryStream("conteudo");
+				SwaggerServlet.flush(req, resp);
+				return;
 			}
 		} finally {
 			if (rset != null)
@@ -49,7 +42,7 @@ public class DocIdPdfGet implements IDocIdPdfGet {
 			if (conn != null)
 				conn.close();
 		}
-		throw new Exception("Não foi possível descomprimir o PDF.");
+		throw new Exception("Não foi possível localizar o PDF.");
 	}
 
 	@Override
