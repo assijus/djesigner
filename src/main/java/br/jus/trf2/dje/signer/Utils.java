@@ -12,22 +12,21 @@ import javax.naming.NameNotFoundException;
 import javax.sql.DataSource;
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 
+import com.crivano.swaggerservlet.SwaggerServlet;
 import com.crivano.swaggerservlet.SwaggerUtils;
 
 public class Utils {
 	private static final Map<String, byte[]> cache = new HashMap<String, byte[]>();
 
 	public static String getUrlBluCServer() {
-		return SwaggerUtils.getProperty("blucservice.url",
-				"http://localhost:8080/blucservice/api/v1");
+		return SwaggerServlet.getProperty("blucservice.url");
 	}
 
 	public static Connection getConnection() throws Exception {
 		try {
 			Context initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:");
-			DataSource ds = (DataSource) envContext
-					.lookup("java:/jboss/datasources/DjeDS");
+			DataSource ds = (DataSource) envContext.lookup(SwaggerServlet.getProperty("datasource.name"));
 			Connection connection = ds.getConnection();
 			if (connection == null)
 				throw new Exception("Can't open connection to Oracle.");
@@ -37,12 +36,9 @@ public class Utils {
 
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
-			String dbURL = SwaggerUtils.getProperty("djesigner.datasource.url",
-					null);
-			String username = SwaggerUtils.getProperty(
-					"djesigner.datasource.username", null);
-			String password = SwaggerUtils.getProperty(
-					"djesigner.datasource.password", null);
+			String dbURL = SwaggerServlet.getProperty("datasource.url");
+			String username = SwaggerServlet.getProperty("datasource.username");
+			String password = SwaggerServlet.getProperty("datasource.password");
 			connection = DriverManager.getConnection(dbURL, username, password);
 			if (connection == null)
 				throw new Exception("Can't open connection.");
@@ -51,8 +47,8 @@ public class Utils {
 	}
 
 	public static String getSQL(String filename) {
-		String text = new Scanner(DocListGet.class.getResourceAsStream(filename
-				+ ".sql"), "UTF-8").useDelimiter("\\A").next();
+		String text = new Scanner(DocListGet.class.getResourceAsStream(filename + ".sql"), "UTF-8").useDelimiter("\\A")
+				.next();
 		return text;
 	}
 

@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.crivano.swaggerservlet.SwaggerUtils;
+import com.crivano.swaggerservlet.SwaggerServlet;
 
 import br.jus.trf2.assijus.system.api.IAssijusSystem.DocListGetRequest;
 import br.jus.trf2.assijus.system.api.IAssijusSystem.DocListGetResponse;
@@ -16,8 +16,7 @@ import br.jus.trf2.assijus.system.api.IAssijusSystem.IDocListGet;
 public class DocListGet implements IDocListGet {
 
 	@Override
-	public void run(DocListGetRequest req, DocListGetResponse resp)
-			throws Exception {
+	public void run(DocListGetRequest req, DocListGetResponse resp) throws Exception {
 
 		// Parse request
 		String cpf = req.cpf;
@@ -25,7 +24,7 @@ public class DocListGet implements IDocListGet {
 		// Setup json array
 		List<Document> list = new ArrayList<>();
 
-		String cpfs = SwaggerUtils.getProperty("djesigner.cpfs", "");
+		String cpfs = SwaggerServlet.getProperty("cpfs");
 		if (cpfs.contains(cpf)) {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
