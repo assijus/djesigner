@@ -4,7 +4,7 @@
 	<groupId>br.jus.trf2.djesigner</groupId>
 	<artifactId>djesigner</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>DJESigner Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>br.jus.trf2.assijus</groupId>
 			<artifactId>assijus-system-api</artifactId>
-			<version>1.0.0</version>
+			<version>1.1.1</version>
 		</dependency>
 
 		<dependency>

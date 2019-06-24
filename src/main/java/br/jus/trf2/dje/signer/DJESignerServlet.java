@@ -16,7 +16,7 @@ public class DJESignerServlet extends SwaggerServlet {
 		setAPI(IAssijusSystem.class);
 		setActionPackage("br.jus.trf2.dje.signer");
 
-		addRestrictedProperty("datasource.name", "java:/jboss/datasources/DjeDs");
+		addRestrictedProperty("datasource.name", "java:/jboss/datasources/DjeDS");
 		addRestrictedProperty("datasource.url", null);
 		addRestrictedProperty("datasource.username", null);
 		addPrivateProperty("datasource.password", null);
