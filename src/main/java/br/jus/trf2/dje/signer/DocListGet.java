@@ -24,7 +24,7 @@ public class DocListGet implements IDocListGet {
 		// Setup json array
 		List<Document> list = new ArrayList<>();
 
-		String cpfs = SwaggerServlet.getProperty("cpfs");
+		String cpfs = DJESignerServlet.getProp("cpfs");
 		if (cpfs.contains(cpf)) {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
