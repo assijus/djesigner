@@ -8,13 +8,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import br.jus.trf2.assijus.system.api.IAssijusSystem.DocIdHashGetRequest;
-import br.jus.trf2.assijus.system.api.IAssijusSystem.DocIdHashGetResponse;
+import br.jus.trf2.assijus.system.api.AssijusSystemContext;
 import br.jus.trf2.assijus.system.api.IAssijusSystem.IDocIdHashGet;
 
 public class DocIdHashGet implements IDocIdHashGet {
 	@Override
-	public void run(DocIdHashGetRequest req, DocIdHashGetResponse resp) throws Exception {
+	public void run(Request req, Response resp, AssijusSystemContext ctx) throws Exception {
 		Id id = new Id(req.id);
 
 		// Chama a procedure que recupera os dados do PDF para viabilizar a

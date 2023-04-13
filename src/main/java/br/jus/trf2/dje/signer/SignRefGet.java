@@ -4,15 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import br.jus.trf2.assijus.system.api.AssijusSystemContext;
 import br.jus.trf2.assijus.system.api.IAssijusSystem.ISignRefGet;
-import br.jus.trf2.assijus.system.api.IAssijusSystem.SignRefGetRequest;
-import br.jus.trf2.assijus.system.api.IAssijusSystem.SignRefGetResponse;
 
 public class SignRefGet implements ISignRefGet {
 
 	@Override
-	public void run(SignRefGetRequest req, SignRefGetResponse resp)
-			throws Exception {
+	public void run(Request req, Response resp, AssijusSystemContext ctx) throws Exception {
 		// Chama a procedure que faz a leitura da assinatura
 		//
 		Connection conn = null;
